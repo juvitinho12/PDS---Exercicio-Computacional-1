@@ -23,33 +23,37 @@ y = convolucao(x, h)
 
 #Análise no Tempo
 plt.figure()
-plt.plot(x)
 plt.plot(y)
-plt.legend(['Aúdio Original', 'Aúdio Filtrado'])
+plt.plot(x)
+plt.legend(['Aúdio Filtrado', 'Aúdio Original'])
 plt.xlabel('Tempo')
 plt.show()
 
-#Análise na Frequência
+
+
+# Calcula a FFT dos sinais x e y
 X = np.fft.fft(x)
 Y = np.fft.fft(y)
 
 # Calcula as frequências correspondentes
 freq = np.fft.fftfreq(len(x), 1/Fs)
 
-X = X[:len(X)//2]
-Y = Y[:len(Y)//2]
-freq = freq[:len(freq)//2]
+# Seleciona apenas a metade do espectro (lado positivo das frequências)
+half_point = len(x)//2
+X = X[:half_point]
+Y = Y[:half_point]
+freq = freq[:half_point]
 
 # Gráfico na frequência
 plt.figure()
-plt.plot(freq, np.abs(X))
 plt.plot(freq, np.abs(Y))
-plt.legend(['FFT Original', 'FFT Filtrado'])
+plt.plot(freq, np.abs(X))
+plt.legend(['FFT Filtrado', 'FFT Original'])
 plt.xlabel('Frequência (Hz)')
 plt.show()
 
 # Rodar o áudio
-sd.play(x, Fs)
+'''sd.play(x, Fs)
 sd.wait()
 sd.play(y, Fs)
-sd.wait()
+sd.wait()'''
